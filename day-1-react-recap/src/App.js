@@ -1,24 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import JobList from "./components/JobList";
+import SearchBar from "./components/SearchBar";
+import { useEffect, useState } from "react";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "bootstrap/dist/css/bootstrap.min.css";
+import JobDetail from "./components/JobDetails";
+import { BrowserRouter, Routes, Route, useParams  } from 'react-router-dom'
+
+
+
 
 function App() {
+  const [query, setQuery] = useState("");
+  const [selectedJob, setSelectedJob] = useState({ name: "title" });
+
+  const params = useParams()
+
+  const getQuery = (query) => setQuery(query);
+  const getSelectedJob = (selectedJob) => setSelectedJob(selectedJob);
+
+  useEffect(() => {
+  }, [query, selectedJob]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Container fluid>
+        <Row>
+          <Col xs={6}>
+            <Row>
+
+              <Col xs={12}>
+              
+
+                <SearchBar getQuery={getQuery} />
+                
+              </Col>
+            </Row>
+
+            <Routes>
+          <Route path='/:company' element={<JobList getSelectedJob={getSelectedJob} query={`?company=${params}`} />} />
+          <Route path='/' element={  <JobList getSelectedJob={getSelectedJob} query={`?search=${query}`} />} />
+
+
+          
+        </Routes>
+
+          </Col>
+          <Col xs={6}>
+
+            <JobDetail job={selectedJob} />
+
+            
+          </Col>
+        </Row>
+      </Container>
+
+  
+      </BrowserRouter>
   );
 }
 
