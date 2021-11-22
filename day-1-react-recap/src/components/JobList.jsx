@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import Col from "react-bootstrap/Col"
+import { useParams } from "react-router";
 
 
 
@@ -9,8 +10,10 @@ function  JobList  (props) {
 
 const [jobs, setJobs] = useState([])
 
+const params = useParams()
+
 const fetchJobs = async (q)  => { 
-    const url = `https://strive-jobs-api.herokuapp.com/jobs${q}&limit=10`
+    const url = `https://strive-jobs-api.herokuapp.com/jobs?search=${q||"frontend"}&limit=10${params.company?`&company=${params.company}`:""}`
     const response = await fetch(url, {
         headers:{
             "Content-Type": "application/json"
@@ -29,9 +32,12 @@ const fetchJobs = async (q)  => {
 }
 
 useEffect(() => {
-fetchJobs(props.query)
+ 
 
- },[props.query])
+  fetchJobs(props.query)
+
+
+ },[props.query,params])
 
 
  return (

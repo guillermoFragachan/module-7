@@ -6,17 +6,19 @@ import { useNavigate,useParams, Routes, Route, Link } from 'react-router-dom'
 
 
 function JobDetail(props) {
-  const params = useParams()
+  // const [searchParams, setSearchParams] = u();
   const navigate = useNavigate()
+
+  const params = useParams()
 
   const job = props.job.e
 
   useEffect(() => {
 
-    console.log(navigate, "params")
+    console.log(params.company, "params")
 
     
-     },[props])
+     },[props, params])
   return (
     <>
 
