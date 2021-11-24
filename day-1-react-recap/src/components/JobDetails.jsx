@@ -15,7 +15,7 @@ function JobDetail(props) {
 
   useEffect(() => {
 
-    console.log(params.company, "params")
+    // console.log(params.company, "params")
 
     
      },[props, params])

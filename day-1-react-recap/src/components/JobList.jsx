@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 
 import { connect } from 'react-redux'
 import { addToFavorite } from "../actions";
+import FavoriteList from "./FavoriteList";
 
 const mapStateToProps = (state) => ({
   favorites: state.favorites
@@ -18,7 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-function  JobList  ({favorites, addFavs}, props) {
+function  JobList  ({favorites, addFavs, getSelectedJob, query}) {
 
 
 const [jobs, setJobs] = useState([])
@@ -37,7 +38,7 @@ const fetchJobs = async (q)  => {
        
 
         setJobs(data.data)
-        console.log(jobs)
+        // console.log(jobs)
 
 
     }
@@ -47,10 +48,10 @@ const fetchJobs = async (q)  => {
 useEffect(() => {
  
 
-  fetchJobs(props.query)
+  fetchJobs(query)
 
 
- },[props.query,params])
+ },[query,params])
 
 
  return (
@@ -60,15 +61,15 @@ useEffect(() => {
          jobs.map((e)=>( 
          
          <Col 
-        //  onClick={()=>{
-        //    props.getSelectedJob({e})
+         onClick={()=>{
+           getSelectedJob({e})
          
             
-        // }} 
+        }} 
 
         onClick={()=>{
-            addFavs({e})
-          }}
+          addFavs({e})
+        }}
          
          >
                     {e.title}
@@ -78,6 +79,10 @@ useEffect(() => {
              </Col>
          ))
      }
+
+
+ 
+
      </>
  )
 

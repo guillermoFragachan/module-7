@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
-import JobDetail from "./components/JobDetails";
+import FavoriteList from "./components/FavoriteList";
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import JobLayout from "./layouts/JobLayout";
 
@@ -27,7 +27,18 @@ function App() {
             </JobLayout>
           }
         />
-         <Route
+        
+      <Route
+          path="/favorites"
+          element={
+            <JobLayout>
+              <FavoriteList
+              />
+            </JobLayout>
+          }
+        />
+
+<Route
           path="/:company"
           element={
             <JobLayout>
@@ -36,7 +47,9 @@ function App() {
             </JobLayout>
           }
         />
-      </Routes>
+
+    
+    </Routes>
 
     
     </BrowserRouter>
