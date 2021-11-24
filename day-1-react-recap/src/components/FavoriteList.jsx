@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
-import Col from "react-bootstrap/Col"
-import { useParams } from "react-router";
 import { connect } from 'react-redux'
-import { addToFavorite } from "../actions";
+import Button from "react-bootstrap/Button";
+import { removeFromFavorite } from "../actions";
+
+
 
 const mapStateToProps = (state) => ({
   favorites: state.favorites.content
@@ -11,7 +11,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
- 
+  removeFavs: function (jobIndex) {
+    dispatch(removeFromFavorite(jobIndex))
+  }
 })
 
 
@@ -25,8 +27,14 @@ function FavoriteList({favorites}){
         <>
         { favorites.length > 0 &&
         favorites.map((e)=>{
-          // console.log(e.e.company_name)
-           return <p>{e.e.company_name}</p>
+           return <p>{e.e.company_name} 
+           
+           <Button
+           onClick={(e)=>{
+
+           }}
+           >remove</Button> 
+           </p>
             
 
           
