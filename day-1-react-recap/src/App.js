@@ -9,6 +9,9 @@ import JobDetail from "./components/JobDetails";
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import JobLayout from "./layouts/JobLayout";
 
+
+
+
 function App() {
  
   return (
@@ -19,6 +22,7 @@ function App() {
           element={
             <JobLayout>
               <JobList
+              
               />
             </JobLayout>
           }
@@ -39,4 +43,4 @@ function App() {
   );
 }
 
-export default App;
+export default  App

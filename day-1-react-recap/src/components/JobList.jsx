@@ -3,9 +3,22 @@ import { useEffect } from "react";
 import Col from "react-bootstrap/Col"
 import { useParams } from "react-router";
 
+import { connect } from 'react-redux'
+import { addToFavorite } from "../actions";
 
+const mapStateToProps = (state) => ({
+  favorites: state.favorites
+  // this is a dummy mapStateToProps, we're writing it just to be able to declare mapDispatchToProps
+  // I'm not returning any key here because my component doesn't need to read anything from the state
+})
+// both these two are ALWAYS functions returning a single object
+const mapDispatchToProps = (dispatch) => ({
+  addFavs: function (jobToAdd) {
+    dispatch(addToFavorite(jobToAdd))
+  }
+})
 
-function  JobList  (props) {
+function  JobList  ({favorites, addFavs}, props) {
 
 
 const [jobs, setJobs] = useState([])
@@ -47,13 +60,20 @@ useEffect(() => {
          jobs.map((e)=>( 
          
          <Col 
-         onClick={()=>{
-           props.getSelectedJob({e})
+        //  onClick={()=>{
+        //    props.getSelectedJob({e})
+         
             
-        }} 
+        // }} 
+
+        onClick={()=>{
+            addFavs({e})
+          }}
          
          >
                     {e.title}
+
+                
                     
              </Col>
          ))
@@ -63,4 +83,4 @@ useEffect(() => {
 
 }
 
-export default JobList
+export default connect(mapStateToProps, mapDispatchToProps)(JobList);;
