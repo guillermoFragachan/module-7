@@ -56,5 +56,5 @@ function FavoriteList({favorites}){
 }
 
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(FavoriteList)
+const connection = connect(mapStateToProps, mapDispatchToProps)
+export default connection(FavoriteList)
