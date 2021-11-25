@@ -1,4 +1,4 @@
-import { ADD_TO_FAVORITE, REMOVE_FROM_FAVORITE } from '../actions'
+import { ADD_TO_FAVORITE, REMOVE_FROM_FAVORITE, GET_JOBS } from '../actions'
 import { initialState } from '../store'
 
 // the reducer's job is ALWAYS to return a valid state for the application
@@ -19,16 +19,23 @@ const mainReducer = (state = initialState, action) => {
           content: [...state.favorites.content, action.payload], // <- just my preference
         },
       }
-    // case REMOVE_FROM_FAVORITE:
-    //   return {
-    //     ...state,
-    //     FAVORITE: {
-    //       ...state.FAVORITE,
-    //       content: state.FAVORITE.content.filter((el, i) => i !== action.payload), // <- it works!
-    //       //   content: [...state.FAVORITE.content.slice(0, action.payload), ...state.FAVORITE.content.slice(action.payload + 1)],
-    //       // this also works, slightly more complex... :)
-    //     },
-    //   }
+    case REMOVE_FROM_FAVORITE:
+      return {
+        ...state,
+        favorites: {
+          ...state.favorites,
+          content: state.favorites.content.filter((el, i) => i !== action.payload), // <- it works!
+          //   content: [...state.FAVORITE.content.slice(0, action.payload), ...state.FAVORITE.content.slice(action.payload + 1)],
+          // this also works, slightly more complex... :)
+        },
+      }
+      case GET_JOBS:
+        return{
+          ...state,
+          jobs:{
+            positions: action.payload
+          }
+        }
     default:
       return state
   }

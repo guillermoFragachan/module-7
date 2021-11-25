@@ -4,11 +4,12 @@ import Col from "react-bootstrap/Col"
 import { useParams } from "react-router";
 
 import { connect } from 'react-redux'
-import { addToFavorite } from "../actions";
+import { addToFavorite, getJobsAction } from "../actions";
 import FavoriteList from "./FavoriteList";
 
 const mapStateToProps = (state) => ({
-  favorites: state.favorites
+  favorites: state.favorites,
+  jobs: state.jobs.positions
   // this is a dummy mapStateToProps, we're writing it just to be able to declare mapDispatchToProps
   // I'm not returning any key here because my component doesn't need to read anything from the state
 })
@@ -16,39 +17,42 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   addFavs: function (jobToAdd) {
     dispatch(addToFavorite(jobToAdd))
+  },
+  getJobs:()=>{
+    dispatch(getJobsAction())
   }
 })
 
-function  JobList  ({favorites, addFavs, getSelectedJob, query}) {
+function  JobList  ({jobs, getJobs, addFavs, getSelectedJob, query}) {
 
 
-const [jobs, setJobs] = useState([])
+// const [jobs, setJobs] = useState([])
 
 const params = useParams()
 
-const fetchJobs = async (q)  => { 
-    const url = `https://strive-jobs-api.herokuapp.com/jobs?search=${q||"frontend"}&limit=10${params.company?`&company=${params.company}`:""}`
-    const response = await fetch(url, {
-        headers:{
-            "Content-Type": "application/json"
-        }
-    })
-    if(response.ok){
-        const data = await response.json()
+// const fetchJobs = async (q)  => { 
+//     const url = `https://strive-jobs-api.herokuapp.com/jobs?search=${q||"frontend"}&limit=10${params.company?`&company=${params.company}`:""}`
+//     const response = await fetch(url, {
+//         headers:{
+//             "Content-Type": "application/json"
+//         }
+//     })
+//     if(response.ok){
+//         const data = await response.json()
        
 
-        setJobs(data.data)
-        // console.log(jobs)
+//         setJobs(data.data)
+//         // console.log(jobs)
 
 
-    }
+//     }
 
-}
+// }
 
 useEffect(() => {
  
 
-  fetchJobs(query)
+  getJobs()
 
 
  },[query,params])
